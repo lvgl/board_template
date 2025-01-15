@@ -86,8 +86,6 @@ jobs:
             echo "❌ The repository URL is NOT"
             exit 1
           fi
-      - 1 conf and def
-      - added to CI updater
 
       - name: Check for YouTube link in README
         run: |
