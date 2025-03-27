@@ -12,7 +12,11 @@ You can purchase ... from ...
 
 Describe the default buffering and other configuration.
 
-YouTube video link
+<a href="https://www.youtube.com/watch?v=XXXXXXXXXXXXXXXXXXXXXXX">
+    <img src="https://github.com/user-attachments/assets/87c1f2e5-0260-4772-b711-13fdab467474" width="75%">
+</a>
+
+The table(s) with the benchmark result
 
 ## Specification
 
@@ -54,7 +58,7 @@ YouTube video link
 ### Debugging
 - Debug  `printf`?
 - Other?
--
+
 ## Notes
 
 Other notes, e.g. different configs, optimization opportunities, adding other libraries to the project, etc
