@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Validate README sections
+        if: ${{ !cancelled() }} # https://docs.github.com/en/actions/reference/workflows-and-actions/expressions#always
         run: |
           if ! grep -q "## Overview" README.md || \
              ! grep -q "## Benchmark" README.md || \
@@ -27,6 +28,7 @@ jobs:
           fi
 
       - name: Check if https://lvgl.io/boards has a link to this repo
+        if: ${{ !cancelled() }}
         run: |
           REPO_URL=$(git config --get remote.origin.url | sed 's/\.git$//')
           curl -s https://lvgl.io/boards | grep -q "$REPO_URL"
@@ -35,6 +37,7 @@ jobs:
           fi
 
       - name: Check if https://github.com/lvgl/lvgl_project_creator/blob/master/manifests has a link to this repo
+        if: ${{ !cancelled() }}
         run: |
           REPO_URL=$(git config --get remote.origin.url | sed 's/.*\/\/[^\/]*\/\([^\/]*\/[^\/]*\).*/\1/')
           curl -s https://raw.githubusercontent.com/lvgl/lvgl_project_creator/master/manifests | grep -q "$REPO_URL"
@@ -43,6 +46,7 @@ jobs:
           fi
 
       - name: Check for single lv_conf files
+        if: ${{ !cancelled() }}
         run: |
           echo "Checking for single lv_conf.h and lv_conf.defaults files..."
           
@@ -66,13 +70,8 @@ jobs:
           
           echo "✅ File checks passed."
 
-      - name: Check for lv_conf.defaults in root
-        run: |
-          if [ ! -f lv_conf.defaults ]; then
-            echo "lv_conf.defaults file is missing in the root directory." && exit 1;
-          fi
-      
       - name: Check if the repo URL is in the branch updater
+        if: ${{ !cancelled() }}
         run: |
           FILE_URL="https://raw.githubusercontent.com/lvgl/lvgl/master/scripts/release_branch_updater_port_urls.txt"
           REPO_URL_TO_CHECK="https://github.com/${{ github.repository }}"
@@ -81,13 +80,14 @@ jobs:
           
           # Download the file and check for the URL
           if curl -s $FILE_URL | grep -Fxq "$REPO_URL_TO_CHECK"; then
-            echo "✅ The repository URL is listed
+            echo "✅ The repository URL is listed"
           else
             echo "❌ The repository URL is NOT"
             exit 1
           fi
 
       - name: Check for YouTube link in README
+        if: ${{ !cancelled() }}
         run: |
           if ! grep -qE 'https://(www\.)?youtube\.com|youtu\.be' README.md; then
             echo "README.md is missing a link to a YouTube video." && exit 1;
